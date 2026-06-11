@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌊 熱海兩天一夜：日本庭園與觀光交流行</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome 圖標（修正缺少圖標庫導致不顯示的問題） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
         
@@ -43,9 +47,12 @@
             color: var(--sunset-orange);
         }
 
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
         .card-hover:hover {
             transform: translateY(-5px);
-            transition: all 0.3s ease;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
     </style>
@@ -119,12 +126,12 @@
         <div class="max-w-6xl mx-auto px-4">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold mb-2">活動實景與風光預覽</h2>
-                <p class="text-gray-500">搶先一睹我們即將前往的研習場地與熱海美景</p>
+                <p class="text-gray-500">搶先一睹我們即將前往的研習場地與熱海美景（點擊圖片可進入介紹網頁）</p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Image 1: Japanese Garden -->
-                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover">
+                <!-- Image 1: Japanese Garden (已加入 group 類別，使 Hover 動效能正確觸發) -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover group">
                     <div class="h-64 overflow-hidden relative">
                        <a href="https://kosugi-zohen.co.jp/" target="_blank" rel="noopener noreferrer" class="block w-full h-full cursor-pointer">
                            <img id="img-garden" src="kosugi.jpg" alt="日式庭園研習" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -134,7 +141,7 @@
                                 </span>
                             </div>  
                         </a>
-                        <span class="absolute top-4 left-4 bg-[#4F772D] text-white text-xs px-3 py-1 rounded-full font-bold">小杉造園研習</span>
+                        <span class="absolute top-4 left-4 bg-[#4F772D] text-white text-xs px-3 py-1 rounded-full font-bold pointer-events-none">小杉造園研習</span>
                     </div>
                     <div class="p-6">
                         <h4 class="font-bold text-xl mb-2">🌿 傳統日式庭園與枯山水</h4>
@@ -142,13 +149,13 @@
                     </div>
                 </div>
 
-                <!-- Image 2: Atami View -->
-                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover">
+                <!-- Image 2: Atami View (已修正標籤嵌套語法錯誤，並補上 group 類別) -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover group">
                     <div class="h-64 overflow-hidden relative">
                         <a href="https://travel.coocan.jp/atami" target="_blank" rel="noopener noreferrer" class="block w-full h-full cursor-pointer">
                             <img id="img-atami" src="atami-2_large.jpg" alt="熱海風光" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
                             <div class="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <span class="absolute top-4 left-4 bg-[#1D3557] text-white text-xs px-3 py-1 rounded-full font-bold">熱海溫泉鄉</span>
+                                <span class="bg-[#1D3557]/90 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md flex items-center gap-1.5">
                                     <i class="fa-solid fa-compass"></i> 開啟熱海導覽
                                 </span>
                             </div>
