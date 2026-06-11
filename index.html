@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌊 熱海兩天一夜：日本庭園與觀光交流行</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        
+        :root {
+            --tatami-beige: #FAF9F6;
+            --deep-sea-blue: #1D3557;
+            --bamboo-green: #4F772D;
+            --sunset-orange: #E76F51;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--tatami-beige);
+            color: var(--deep-sea-blue);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .nav-active {
+            border-bottom: 3px solid var(--sunset-orange);
+            color: var(--sunset-orange);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Chosen Palette: 和風夏日 (Tatami Beige, Deep Sea Blue, Bamboo Green, Sunset Orange) -->
+<!-- Application Structure Plan: 
+    1. 英雄視覺區 (Hero)：核心標題與即時倒數計時器，營造報名緊迫感。
+    2. 活動導覽區 (Overview)：介紹主辦單位與活動核心價值。
+    3. 行程亮點對比 (Highlights)：使用互動式卡片切換「職人研習」與「熱海觀光」兩大主題。
+    4. 補助與預算 (Financials)：使用 Chart.js 展示主辦單位補助與自費項目的對比，直觀呈現活動的高 CP 值。
+    5. 報名與須知 (Logistics)：整合報名連結、截止日期與重要審查提醒。
+    選擇此結構是因為報名資訊通常瑣碎，透過視覺化圖表與標籤切換，能幫助留學生快速在移動端過濾出他們最在意的「學什麼」、「花多少」與「如何報名」。
+-->
+<!-- Visualization & Content Choices: 
+    - 倒數計時器：JS 動態更新，強化截止日期 2026/6/14 的重要性。
+    - 亮點切換：點擊式 UI，區分教育與娛樂兩類行程。
+    - 費用比例圖：Chart.js (Donut)，視覺化展示補助優勢。
+    - 報名資格列表：HTML 結構化清單。
+    - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+-->
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between h-16 items-center">
+                <div class="font-bold text-xl flex items-center">
+                    <span class="text-2xl mr-2">🌊</span> 熱海研習交流行
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="nav-link nav-active py-2">首頁</a>
+                    <a href="#highlights" class="nav-link py-2">行程亮點</a>
+                    <a href="#costs" class="nav-link py-2">費用補助</a>
+                    <a href="#apply" class="nav-link py-2">立即報名</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative py-16 bg-white overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6">
+                【初夏來襲！】<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+                    2026 熱海兩天一夜日本庭園研習
+                </span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                職人指導枯山水講座 ✕ 熱海溫泉在地觀光 ✕ 台日學生深度交流
+            </p>
+            
+            <div class="bg-orange-50 border-2 border-orange-200 rounded-2xl p-6 mb-10 inline-block shadow-sm">
+                <p class="text-orange-800 font-bold mb-2">⏳ 報名截止倒數</p>
+                <div id="countdown" class="text-3xl font-mono font-bold text-orange-600">
+                    計算中...
+                </div>
+                <p class="text-sm text-orange-700 mt-2">2026 年 6 月 14 日 16:00 截止</p>
+            </div>
+
+            <div>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeOOJw-kzG6mc752GGw65RKjRgC0XY4xfGjO2HK4fQM2TviYA/viewform" 
+                   target="_blank"
+                   class="bg-[#1D3557] text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-opacity-90 transition shadow-lg">
+                    立即報名 ♨️
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Paragraph -->
+    <section class="max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-bold mb-4 text-center">關於本次交流活動</h2>
+            <p class="leading-relaxed text-gray-700">
+                本活動由「台北駐日經濟文化代表處教育組」、「TTSA」與「小杉造園」聯合主辦。在這個充滿活力的初夏，我們誠摯邀請全日本的台灣留學生與日本同學，一同前往熱海展開兩天一夜的學習與探索旅程。這不僅是一次身心的放鬆，更是一個學習日本職人精神（如枯山水、四つ目垣實作）並建立跨校人脈的絕佳機會。
+            </p>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section id="highlights" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">我們要做什麼？</h2>
+                <p class="text-gray-600">知性研習與放鬆觀光的完美比例</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 card-hover">
+                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
+                        <span class="text-3xl text-green-700">🌿</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-[#4F772D]">專業庭園研習</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span> 
+                            <span><strong>大師級講座：</strong>由日本傳統庭園大師親自指導。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span> 
+                            <span><strong>手作實習：</strong>親自參與「四つ目垣」竹籬實作。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span> 
+                            <span><strong>職人體驗：</strong>深入體會枯山水背後的文化底蘊。</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 card-hover">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+                        <span class="text-3xl text-blue-700">♨️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-[#1D3557]">熱海在地觀光</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span> 
+                            <span><strong>溫泉放鬆：</strong>享受著名的熱海溫泉美景。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span> 
+                            <span><strong>台日交流：</strong>結交各校留學生與在地日本朋友。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2">✔️</span> 
+                            <span><strong>美食聚餐：</strong>共同享用熱海車站周邊名店料理。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Section -->
+    <section id="costs" class="py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">費用負擔說明</h2>
+                <p class="text-gray-600">代表處大力支持，讓學生輕鬆參與</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-12 bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex-1 w-full">
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-6">
+                    <div>
+                        <h4 class="font-bold text-lg text-green-700 mb-2">🎁 主辦單位補助 (FREE)</h4>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600">
+                            <li>🍱 第一天精緻午餐</li>
+                            <li>🪴 專業課程與材料費</li>
+                            <li>🛌 Seminar House 住宿</li>
+                            <li>🍲 第一天晚間聚餐</li>
+                            <li>🥪 第二天元氣早餐</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-orange-600 mb-2">🎒 參加者自費</h4>
+                        <ul class="text-sm text-gray-600 list-disc pl-5">
+                            <li>往返集合地點與熱海站的交通費</li>
+                            <li>私人消費、景點門票與第二日個人行程</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-xl text-xs text-blue-800">
+                        * 住宿安排為兩人房，採嚴格男女有別分房。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Section -->
+    <section id="apply" class="py-16 bg-[#1D3557] text-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">報名須知與須知</h2>
+                <div class="w-24 h-1 bg-sunset-orange mx-auto"></div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                    <h4 class="text-xl font-bold mb-4 text-orange-300">📝 報名審查機制</h4>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        由於經費有限，名額非常有限。<strong>報名並不保證一定錄取</strong>，最終錄取名單由「台北駐日經濟文化代表處教育組」決定。
+                    </p>
+                    <div class="flex items-center space-x-2 text-sm text-white/80 italic">
+                        <span>💡 特別叮嚀：機會難得，錄取後請勿臨時取消喔！</span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                        <h4 class="font-bold text-lg mb-2">📍 時間與地點</h4>
+                        <p class="text-sm text-gray-300">
+                            日期：2026/6/27 (六) - 6/28 (日)<br>
+                            地點：熱海市小杉造園<br>
+                            結束：第二天 18:00
+                        </p>
+                    </div>
+                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                        <h4 class="font-bold text-lg mb-2">🤝 歡迎揪團</h4>
+                        <p class="text-sm text-gray-300">
+                            誠摯歡迎與您的日本同學一起報名，共同體驗傳統文化交流！
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center pt-8">
+                    <p class="mb-4 text-orange-400 font-bold">截止時間：2026/6/14 (日) 16:00</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeOOJw-kzG6mc752GGw65RKjRgC0XY4xfGjO2HK4fQM2TviYA/viewform" 
+                       target="_blank"
+                       class="inline-block bg-[#E76F51] hover:bg-orange-600 text-white px-12 py-5 rounded-full text-xl font-bold shadow-2xl transform hover:scale-105 transition-all">
+                        前往填寫報名表單
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-white text-center">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm font-medium opacity-70">
+                <span>台北駐日經濟文化代表處 教育組</span>
+                <span>TTSA 留日同學會</span>
+                <span>小杉造園 Kosugi Zoen</span>
+            </div>
+            <p class="text-xs text-gray-400">© 2026 熱海研習交流行工作小組. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateCountdown() {
+            const deadline = new Date("2026-06-14T16:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = deadline - now;
+
+            if (diff <= 0) {
+                document.getElementById("countdown").innerHTML = "報名已截止";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        const ctx = document.getElementById('costChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['主辦補助項目 (FREE)', '個人負擔項目'],
+                datasets: [{
+                    data: [5, 2],
+                    backgroundColor: ['#4F772D', '#E76F51'],
+                    borderColor: ['#ffffff', '#ffffff'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { family: 'Noto Sans TC', size: 14 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label === '主辦補助項目 (FREE)') return '包含：午餐、課程、住宿、晚宴、早餐';
+                                return '包含：往返交通、個人娛樂景點門票';
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('nav-active'));
+                    this.classList.add('nav-active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
