@@ -52,23 +52,6 @@
 </head>
 <body class="antialiased">
 
-<!-- Chosen Palette: 和風夏日 (Tatami Beige, Deep Sea Blue, Bamboo Green, Sunset Orange) -->
-<!-- Application Structure Plan: 
-    1. 英雄視覺區 (Hero)：核心標題與即時倒數計時器，營造報名緊迫感。
-    2. 活動導覽區 (Overview)：介紹主辦單位與活動核心價值。
-    3. 行程亮點對比 (Highlights)：使用互動式卡片切換「職人研習」與「熱海觀光」兩大主題。
-    4. 補助與預算 (Financials)：使用 Chart.js 展示主辦單位補助與自費項目的對比，直觀呈現活動的高 CP 值。
-    5. 報名與須知 (Logistics)：整合報名連結、截止日期與重要審查提醒。
-    選擇此結構是因為報名資訊通常瑣碎，透過視覺化圖表與標籤切換，能幫助留學生快速在移動端過濾出他們最在意的「學什麼」、「花多少」與「如何報名」。
--->
-<!-- Visualization & Content Choices: 
-    - 倒數計時器：JS 動態更新，強化截止日期 2026/6/14 的重要性。
-    - 亮點切換：點擊式 UI，區分教育與娛樂兩類行程。
-    - 費用比例圖：Chart.js (Donut)，視覺化展示補助優勢。
-    - 報名資格列表：HTML 結構化清單。
-    - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
--->
-
     <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4">
@@ -78,6 +61,7 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="#hero" class="nav-link nav-active py-2">首頁</a>
+                    <a href="#gallery" class="nav-link py-2">美景預覽</a>
                     <a href="#highlights" class="nav-link py-2">行程亮點</a>
                     <a href="#costs" class="nav-link py-2">費用補助</a>
                     <a href="#apply" class="nav-link py-2">立即報名</a>
@@ -86,31 +70,34 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative py-16 bg-white overflow-hidden">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6">
+    <!-- Hero Section with Background Image -->
+    <section id="hero" class="relative py-24 md:py-32 bg-cover bg-center overflow-hidden" style="background-image: linear-gradient(rgba(29, 53, 87, 0.85), rgba(29, 53, 87, 0.85)), url('https://images.unsplash.com/photo-1542640244-7e672d6cef4e?auto=format&fit=crop&w=1600&q=80');">
+        <div class="max-w-6xl mx-auto px-4 text-center relative z-10 text-white">
+            <span class="bg-orange-500 text-white text-xs md:text-sm font-bold uppercase px-4 py-1.5 rounded-full mb-4 inline-block tracking-wider">
+                🇯🇵 留日台日學生限定交流
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
                 【初夏來襲！】<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-green-300">
                     2026 熱海兩天一夜日本庭園研習
                 </span>
             </h1>
-            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto font-light">
                 職人指導枯山水講座 ✕ 熱海溫泉在地觀光 ✕ 台日學生深度交流
             </p>
             
-            <div class="bg-orange-50 border-2 border-orange-200 rounded-2xl p-6 mb-10 inline-block shadow-sm">
-                <p class="text-orange-800 font-bold mb-2">⏳ 報名截止倒數</p>
-                <div id="countdown" class="text-3xl font-mono font-bold text-orange-600">
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 mb-10 inline-block shadow-xl">
+                <p class="text-orange-300 font-bold mb-2">⏳ 報名截止倒數</p>
+                <div id="countdown" class="text-3xl font-mono font-bold text-white drop-shadow">
                     計算中...
                 </div>
-                <p class="text-sm text-orange-700 mt-2">2026 年 6 月 14 日 16:00 截止</p>
+                <p class="text-xs text-gray-300 mt-2">2026 年 6 月 14 日 16:00 截止</p>
             </div>
 
             <div>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeOOJw-kzG6mc752GGw65RKjRgC0XY4xfGjO2HK4fQM2TviYA/viewform" 
                    target="_blank"
-                   class="bg-[#1D3557] text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-opacity-90 transition shadow-lg">
+                   class="bg-[#E76F51] text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-opacity-90 transition shadow-lg transform hover:scale-105 inline-block">
                     立即報名 ♨️
                 </a>
             </div>
@@ -118,12 +105,52 @@
     </section>
 
     <!-- Introduction Paragraph -->
-    <section class="max-w-4xl mx-auto px-4 py-12">
-        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+    <section class="max-w-4xl mx-auto px-4 py-12 -mt-10 relative z-20">
+        <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
             <h2 class="text-2xl font-bold mb-4 text-center">關於本次交流活動</h2>
             <p class="leading-relaxed text-gray-700">
                 本活動由「台北駐日經濟文化代表處教育組」、「TTSA」與「小杉造園」聯合主辦。在這個充滿活力的初夏，我們誠摯邀請全日本的台灣留學生與日本同學，一同前往熱海展開兩天一夜的學習與探索旅程。這不僅是一次身心的放鬆，更是一個學習日本職人精神（如枯山水、四つ目垣實作）並建立跨校人脈的絕佳機會。
             </p>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section id="gallery" class="py-12 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-2">活動實景與風光預覽</h2>
+                <p class="text-gray-500">搶先一睹我們即將前往的研習場地與熱海美景</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Image 1: Japanese Garden -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover">
+                    <div class="h-64 overflow-hidden relative">
+                        <img id="img-garden" src="https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80" alt="日式庭園研習" class="w-full h-full object-cover">
+                        <span class="absolute top-4 left-4 bg-[#4F772D] text-white text-xs px-3 py-1 rounded-full font-bold">小杉造園研習場地</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">🌿 傳統日式庭園與枯山水</h4>
+                        <p class="text-gray-600 text-sm">我們將於此親身體驗「四つ目垣」竹籬實作，由大師級職人親自帶領，深入體驗日本傳統空間美學與匠人靈魂。</p>
+                    </div>
+                </div>
+
+                <!-- Image 2: Atami View -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover">
+                    <div class="h-64 overflow-hidden relative">
+                        <img id="img-atami" src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" alt="熱海風光" class="w-full h-full object-cover">
+                        <span class="absolute top-4 left-4 bg-[#1D3557] text-white text-xs px-3 py-1 rounded-full font-bold">熱海溫泉鄉</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">♨️ 熱海蔚藍海岸與溫泉放鬆</h4>
+                        <p class="text-gray-600 text-sm">除了知性的手作課程，更能漫步在著名的熱海海濱，與新結識的夥伴一同享受溫泉、交流生活，度過充實的週末。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center text-xs text-gray-400 italic">
+                * 註：以上為意境美景示意圖。實際活動照片將於活動期間及結束後更新於本站。
+            </div>
         </div>
     </section>
 
