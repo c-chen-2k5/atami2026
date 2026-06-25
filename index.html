@@ -84,16 +84,15 @@
                 <span class="inline-block">📢 颱風延期特別企劃</span> ✕ <span class="inline-block">釋出部分名額限時搶報</span>
             </span>
             
-            <!-- 調整後的固定三行大標題 -->
+            <!-- 完美的響應式主視覺大標題：手機三行、電腦兩行 -->
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                <!-- 第一行：在任何螢幕大小皆獨立成行 -->
-                <span class="block mb-2 md:mb-3">【初夏來襲！】</span>
-                <!-- 第二行：在任何螢幕大小皆獨立成行 -->
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-green-300 block mb-2 md:mb-3">
+                <!-- 第一行：在任何螢幕大小下都維持獨立成行 -->
+                <span class="block mb-2 md:mb-4">【初夏來襲！】</span>
+                <!-- 第二與三行：在手機（小螢幕）上為 block（自動分行成三行），在電腦（md 寬螢幕）以上會轉換為 inline-block 合併成同一行（兩行效果） -->
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-green-300 block md:inline-block md:mr-3">
                     2026 熱海兩天一夜
                 </span>
-                <!-- 第三行：在任何螢幕大小皆獨立成行 -->
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-green-300 block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-green-300 block md:inline-block">
                     日本庭園研習
                 </span>
             </h1>
@@ -160,7 +159,7 @@
                     </div>
                 </div>
 
-                <!-- Image 2: Atami View (已修正標籤與語法，完美對齊排版) -->
+                <!-- Image 2: Atami View -->
                 <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100 card-hover group">
                     <div class="h-64 overflow-hidden relative">
                         <a href="https://www.ataminews.gr.jp/" target="_blank" rel="noopener noreferrer" class="block w-full h-full cursor-pointer">
